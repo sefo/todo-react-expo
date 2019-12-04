@@ -1,0 +1,35 @@
+import React, { Component } from 'react';
+import { View, Text } from 'react-native';
+import { styles } from './Todo.style';
+import { CheckBox, Button } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/Feather';
+
+interface LocalProps { todo: any; delete: Function };
+interface LocalState { checked: boolean; };
+
+class Todo extends Component<LocalProps, LocalState> {
+
+    constructor(props: LocalProps) {
+        super(props);
+        this.state = {
+            checked: false
+        };
+    }
+
+    render() {
+        return (
+            <View style={styles.Container}>
+                <CheckBox onPress={this.toggle} checked={this.state.checked} />
+                <Text style={styles.Todo}>{this.props.todo.content}</Text>
+                <Button
+                    icon={<Icon name="trash" color="#2089dc" size={20} />}
+                    type="clear"
+                    onPress={this.delete} />
+            </View>
+        )
+    }
+    delete = () => this.props.delete(this.props.todo.uuid);
+    toggle = () => this.setState((prev: LocalState) => ({ checked: !prev.checked }));
+}
+
+export default Todo;
