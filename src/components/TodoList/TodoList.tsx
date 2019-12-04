@@ -22,6 +22,7 @@ class TodoList extends Component {
                 <Todo
                     key={todo.uuid}
                     delete={this.deleteTodo}
+                    done={this.doneTodo}
                     todo={todo}
                 ></Todo>
             )
@@ -30,6 +31,9 @@ class TodoList extends Component {
 
     deleteTodo = (uuid: string) => {
         todoService.remove(uuid);
+    }
+    doneTodo = (uuid: string) => {
+        todoService.done(uuid);
     }
 
     render() {

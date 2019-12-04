@@ -4,7 +4,7 @@ import { styles } from './Todo.style';
 import { CheckBox, Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/Feather';
 
-interface LocalProps { todo: any; delete: Function };
+interface LocalProps { todo: any; delete: Function, done: Function };
 interface LocalState { checked: boolean; };
 
 class Todo extends Component<LocalProps, LocalState> {
@@ -17,10 +17,15 @@ class Todo extends Component<LocalProps, LocalState> {
     }
 
     render() {
+        const { todo } = this.props;
         return (
             <View style={styles.Container}>
                 <CheckBox onPress={this.toggle} checked={this.state.checked} />
-                <Text style={styles.Todo}>{this.props.todo.content}</Text>
+                <Text
+                    style={[
+                        styles.Todo,
+                        todo.done ? { 'textDecorationLine': 'line-through' } : { 'textDecorationLine': 'none' }]
+                    }>{todo.content}</Text>
                 <Button
                     icon={<Icon name="trash" color="#2089dc" size={20} />}
                     type="clear"
@@ -29,7 +34,10 @@ class Todo extends Component<LocalProps, LocalState> {
         )
     }
     delete = () => this.props.delete(this.props.todo.uuid);
-    toggle = () => this.setState((prev: LocalState) => ({ checked: !prev.checked }));
+    toggle = () => {
+        this.setState((prev: LocalState) => ({ checked: !prev.checked }));
+        this.props.done(this.props.todo.uuid);
+    };
 }
 
 export default Todo;

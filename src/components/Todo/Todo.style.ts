@@ -9,6 +9,6 @@ export const styles = StyleSheet.create<any>({
         width: '100%'
     },
     Todo: {
-        fontFamily: 'Comic Sans MS'
+        fontFamily: 'indie-flower'
     }
 });

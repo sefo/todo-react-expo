@@ -45,6 +45,7 @@ class NewTodo extends Component<LocalProps, LocalState> {
     }
     add = (todo: string) => newTodo$.next(todo);
     create = () => {
+        if (this.state.todo === "") return;
         todoService.add({ uuid: uuid(), content: this.state.todo, done: false });
         this.setState({ todo: "" });
         this.todoInput.current.clear();
